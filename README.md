@@ -1,106 +1,114 @@
 # 🛰️ Satellite Port Detection System
 
-Hey there! 👋 Welcome to my Satellite Port Detection project. This is a cool computer vision system I built that can find, analyze, and navigate to a satellite port. Think of it as teaching a camera to find a specific target (a red circle surrounded by squares) and figure out how it's positioned.
+Hey everyone! Welcome to my space project! 👋 
 
-## 🎯 What Does It Do?
+Thank you for the amazing opportunity to work on this super cool project! I had a blast implementing a computer vision system that can detect, analyze, and navigate to a satellite port. It was such a fun exercise that really got me thinking about how we can use fundamental computer vision principles in space applications!
 
-This project helps solve three main challenges:
-1. Finding a red circle within squares (like finding a specific port on a satellite)
-2. Figuring out if the port is rotated (and by how much)
-3. Moving a camera around to find the port when it's partially hidden
+## 🎯 What's This All About?
 
-## 🧩 Main Parts
+I tackled three main challenges in this project:
+1. Finding a red circle within squares (think of it as locating a specific port on a satellite)
+2. Working out how much the port is rotated
+3. Moving a camera around to find the port even when it's partially hidden
 
-### 📸 Creating the Reference Image (`base_image.py`)
-This is where we create our test image. Imagine drawing two squares (one big, one small) with a red circle that touches specific points on both squares. The measurements are pretty straightforward:
+## 🧩 The Cool Parts
+
+### 📸 Making the Reference Image (`base_image.py`)
+First up, I created a test image with two squares and a red circle. The measurements are:
 - Big square: 40x40 cm
 - Small square: 20x20 cm
 - Red circle: 5 cm across
-- Each centimeter is 16 pixels in the image
+- Each centimeter = 16 pixels
 
-The tricky part was getting the circle in just the right spot - it needs to be exactly 2.5 cm from the edges and corners. (Trust me, this took some trial and error to get right! 😅)
+Getting the circle in exactly the right spot was tricky - it needs to be precisely 2.5 cm from the edges and corners. Took some trial and error, but got there in the end! 😅
 
-### 🔄 Detecting Rotation (`mainrotation.py`)
-This part figures out how much the port is rotated. It's like when you're trying to read text that's tilted - your brain automatically figures out the angle. Here, we're teaching the computer to do the same thing.
+### 🔄 Figuring Out Rotation (`mainrotation.py`)
+This part was interesting! I taught the computer to figure out how much the port is rotated. You know how your brain can tell when text is tilted? I implemented something similar here!
 
-The cool stuff it does:
-- Finds the red circle using color detection (turns out HSV color space works great for this!)
-- Calculates the exact angle of rotation
-- Tells us how confident it is about its answer
+The neat stuff it does:
+- Spots the red circle using HSV color space (works way better than RGB!)
+- Works out the exact rotation angle
+- Tells you how sure it is about its answer
 
-Here's a peek at how we detect the red color:
+Here's a bit of the color detection magic:
 ```python
-# We look for red in two ranges because red appears at both ends of the HSV spectrum
+# Red appears at both ends of the HSV spectrum, so we need two ranges
 lower_red1 = [0, 50, 50]      # Start of red spectrum
 lower_red2 = [170, 50, 50]    # End of red spectrum
 upper_red1 = [10, 255, 255]   # Bright reds
 upper_red2 = [180, 255, 255]  # Dark reds
 ```
 
-### 🎮 Camera Navigation (`navigation.py`)
-This is probably the most fun part! Imagine you're playing a video game where you need to find something, but you can only see a small part of the map at a time. That's exactly what this does - it moves a virtual camera around in a spiral pattern until it spots the port.
+### 🎮 Finding the Port (`navigation.py`)
+This was probably my favorite part! It's like a little game where the camera has to find the port. I made it move in a spiral pattern - pretty efficient way to search an area!
 
-How it searches:
+Check out how it moves:
 ```python
-# The camera moves in this pattern:
-#  → ↑ ← ↓ (and repeat, getting bigger each time)
+# The camera does this pattern:
+#  → ↑ ← ↓ (and keeps going, getting bigger each time)
 directions = [(0, -1), (-1, 0), (0, 1), (1, 0)]
 step_size = 50  # pixels per move
 ```
 
-### 👁️ Visualization (`unified_visualization.py`)
-This brings everything together with some nice visuals. You can:
-- See the port from different angles (0° to 90°)
-- Watch the camera move around as it searches
-- See a 3D-like view of how the port looks from different positions
+### 👁️ Making It All Visual (`unified_visualization.py`)
+This brings everything together with some cool visuals. You can:
+- Look at the port from different angles (0° to 90°)
+- Watch the camera searching around
+- See how the port looks from different positions
 
-## 🚀 Want to Try It?
+## 🚀 Want to Give It a Try?
 
-1. First, install the stuff you need:
+1. Get the basics installed:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Then you can play with each part:
+2. Play around with it:
 ```python
-# Make a test image
+# Create a test image
 from base_image import SatellitePort
 port = SatellitePort()
 image = port.generate_image()
 
-# Test rotation detection (22.5° is our standard test angle)
+# Check out the rotation detection (22.5° is my test angle)
 from mainrotation import EnhancedRotationDetector
 detector = EnhancedRotationDetector()
 angle = detector.process_image(22.5)
 
-# Try the navigation
+# Try the navigation system
 from navigation import CameraNavigator
 navigator = CameraNavigator()
 found, commands = navigator.search_for_circle()
 
-# See it all in action
+# See all the visuals
 from unified_visualization import UnifiedVisualizer
 visualizer = UnifiedVisualizer()
 visualizer.visualize_unified(angle=22.5)
 ```
 
-## 🛠️ What You Need
+## 🛠️ What You'll Need
 - Python 3.x
-- OpenCV (for image stuff)
-- NumPy (for math)
-- Matplotlib (for making it look pretty)
+- OpenCV (for the computer vision stuff)
+- NumPy (for all the math)
+- Matplotlib (to make everything look nice)
 
-## 💫 Cool Features
-- Works really well for angles up to 90°
-- Usually finds the port in a few seconds
-- Shows you exactly how it's thinking with real-time visuals
-- Keeps the camera 100 cm from the port (just like a real satellite might!)
+## 💫 Some Cool Things About It
+- Works great for angles up to 90°
+- Finds the port pretty quickly
+- Shows you exactly what it's doing
+- Keeps the camera 100 cm from the port (just like a real satellite!)
 
-## 📝 Good to Know
-- Everything's measured in centimeters (1 cm = 16 pixels)
-- We use HSV colors because they're more reliable than RGB for finding specific colors
-- The code's organized into separate files so it's easy to understand and modify
-- There's plenty of error checking so it won't crash on you
+## 📝 Quick Notes
+- Everything's in centimeters (1 cm = 16 pixels)
+- Used HSV colors because they're more reliable
+- Code is nicely organized in different files
+- Lots of error checking to keep things running smooth
+
+I've also tried some alternative approaches which you can find in the alternative folder - feel free to explore those too! I used LLMs to help make the code more readable while keeping my core logic intact.
+
+Have fun with it, and let me know how it goes for you! 🚀✨
+
+~ Adithya S
 
 ## 🤝 Contributing
 Found a bug? Have an idea to make it better? Feel free to open an issue or send a pull request! I'm always happy to improve things.
