@@ -8,7 +8,6 @@ from typing import Tuple, List, Optional
 class CameraNavigator:
     def __init__(self, view_size: Tuple[int, int] = (200, 200)):
         """Initialize the camera navigator with the reference image from base_image.py."""
-        # Get reference image from SatellitePort
         port = SatellitePort()
         self.full_image = port.generate_image()
             
