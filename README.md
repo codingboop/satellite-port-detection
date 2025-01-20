@@ -71,34 +71,28 @@ Implements perspective transformation and visualization:
 pip install -r requirements.txt
 ```
 
-2. Implementation Examples:
-```python
-# Generate reference port image
-from base_image import SatellitePort
-port = SatellitePort()
-image = port.generate_image()
+2. Run each component:
+```bash
+# Generate base reference image
+python base_image.py
 
-# Analyze rotation (standard test: 22.5°)
-from mainrotation import EnhancedRotationDetector
-detector = EnhancedRotationDetector()
-angle = detector.process_image(22.5)
+# Detect rotation angle (accepts arbitrary rotation)
+python mainrotation.py
 
-# Execute port navigation
-from navigation import CameraNavigator
-navigator = CameraNavigator()
-found, commands = navigator.search_for_circle()
+# Execute port navigation with camera movements
+python navigation.py
 
-# Generate perspective visualization
-from unified_visualization import UnifiedVisualizer
-visualizer = UnifiedVisualizer()
-visualizer.visualize_unified(angle=22.5)
+# Generate perspective view and camera movement simulation
+python unified_visualization.py
 ```
 
+Each file can be run independently and will prompt for necessary inputs when required.
+
 ## 🛠️ Technical Requirements
-- Python 
-- OpenCV 
-- NumPy
-- Matplotlib 
+- Python 3.x
+- OpenCV (computer vision operations)
+- NumPy (mathematical computations)
+- Matplotlib (visualization framework)
 
 ## 💫 Performance Characteristics
 - Rotation Detection: Accurate to ±1° within 90° range
@@ -114,39 +108,7 @@ visualizer.visualize_unified(angle=22.5)
 
 Alternative implementations exploring different geometric approaches are available in the alternative folder. The codebase has been enhanced with LLMs while preserving the core mathematical logic.
 
-Excited to share this implementation with the community! 🚀✨
+Excited to share this implementation! 🚀✨
 
 ~ Adithya S
-
-## 🤝 Contributing
-Found a bug? Have an idea to make it better? Feel free to open an issue or send a pull request! I'm always happy to improve things.
-
-You can reach me at:
-- GitHub: [@codingboop](https://github.com/codingboop)
-
-## 📜 License
-This project is licensed under the MIT License - see below for details:
-
-```
-MIT License
-
-Copyright (c) 2024 codingboop
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-``` 
+(Interview Assignment - Team Aule Space) 
