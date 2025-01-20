@@ -114,7 +114,7 @@ visualizer.visualize_unified(angle=22.5)
 
 Alternative implementations exploring different geometric approaches are available in the alternative folder. The codebase has been enhanced with LLMs while preserving the core mathematical logic.
 
-Excited to share this implementation with the community! 🚀✨
+Excited to share this implementation with you! 🚀✨
 
 ~ Adithya S
 
